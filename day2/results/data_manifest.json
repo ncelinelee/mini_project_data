@@ -1,0 +1,26 @@
+{
+  "created_at_utc": "2026-10-01T23:56:25.014097+00:00",
+  "files": [
+    {
+      "batch": "Batch1",
+      "filename": "2017-05-12_batchdata_updated_struct_errorcorrect.mat",
+      "bytes": 3025320241
+    },
+    {
+      "batch": "Batch2",
+      "filename": "2018-02-20_batchdata_updated_struct_errorcorrect.mat",
+      "bytes": 2022599329
+    },
+    {
+      "batch": "Batch3",
+      "filename": "2018-04-12_batchdata_updated_struct_errorcorrect.mat",
+      "bytes": 3236690412
+    }
+  ],
+  "feature_sha256": "f688f93f6d5dcab785cb2e67d4f985570a676532ae471ef830148e62fe80cc07",
+  "total_cells": 139,
+  "labelled_cells": 129,
+  "day1_parity_check": "passed",
+  "feature_window": "original cycles 1-100",
+  "interpolation": "none; common voltage grid"
+}

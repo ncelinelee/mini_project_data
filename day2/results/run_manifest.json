@@ -1,0 +1,30 @@
+{
+  "completed_at_utc": "2026-10-01T23:56:32.871717+00:00",
+  "python": "3.11.15",
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "packages": {
+    "numpy": "2.4.6",
+    "pandas": "3.0.6",
+    "scipy": "1.17.1",
+    "h5py": "3.16.0",
+    "scikit-learn": "1.9.1",
+    "joblib": "1.6.0",
+    "matplotlib": "3.11.2"
+  },
+  "selection_sha256": "d1d628a5a6eeb3a30e4ca2500401c486337f2a5442292d373fd9f9ee282a1bee",
+  "feature_sha256": "f688f93f6d5dcab785cb2e67d4f985570a676532ae471ef830148e62fe80cc07",
+  "design_sha256": "457f44db11efc61b710aa42896e9e432078d28447795743f5518798213f0c5c5",
+  "holdout_sha256": "7a6b0abac0a6821e02b5bec8c6b759b9c91d2f48a12a39cef2be0b60cf9ccfd9",
+  "source_sha256": {
+    "day2/__init__.py": "6a585befc2e89e7f3e031a9fc3f2b6681e606ec9caec4d0b34988ffceaa89f02",
+    "day2/data.py": "b7c2124be12fac27e2824ea1bd9eaa1066484f6c5226c81d83a4b2f9a0528407",
+    "day2/experiment.py": "59e7783c4a561a0cd1dbe4be05340f7a6809a97e2a1b34c53b599b1dcc7a72bc",
+    "day2/modeling.py": "f01c1a252fc5f5d2934a9ea2e1cea8918dea2d9750eaf1e88074383da2d0a558",
+    "day2/plots.py": "e2af15bb825647c0c000bad79eb6390714374638833d7ac232dec6b54a43cca4",
+    "day2/predict.py": "20f8f36b7e0ab84a69fe662ecb570c08c75f447f51947657d8bd659b495ff17c"
+  },
+  "selection_unchanged_during_evaluation": true,
+  "model_reload_prediction_check": "passed",
+  "negative_prediction_count": 0,
+  "convergence_warning_count_cv": 0
+}

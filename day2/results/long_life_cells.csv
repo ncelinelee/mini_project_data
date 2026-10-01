@@ -1,0 +1,4 @@
+cell_id,batch,policy,cycle_life,split,prediction,error_cycles,absolute_error_cycles,ape_pct,life_group
+Batch3-C07,Batch3,4.8C(80%)-4.8C-newstructure,1836.0,Additional_Batch3,1124.3966095316086,-711.6033904683914,711.6033904683914,38.75835460067491,>1000
+Batch3-C38,Batch3,5C(67%)-4C-newstructure,1935.0,Additional_Batch3,1034.3757469167374,-900.6242530832626,900.6242530832626,46.543889048230625,>1000
+Batch3-C45,Batch3,4.8C(80%)-4.8C-newstructure,1801.0,Additional_Batch3,1156.945693517763,-644.054306482237,644.054306482237,35.760927622556196,>1000

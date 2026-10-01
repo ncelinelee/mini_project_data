@@ -1,0 +1,38 @@
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+.DS_Store
+# 원본 데이터는 다운로드 방법을 README에 안내한다.
+data-30/
+*.mat
+tmp/
+*.log
+.env
+.env.*
+day2/notebook_results/
+day2/reproduction_results/
+# DAY1의 중간 배열과 초안 그래프는 제출 자료에서 제외한다.
+day1/step01/*.npz
+day1/step02/*.npz
+day1/step03/*.npz
+day1/simple_chart_proposals/
+day1/step01/*.png
+day1/step02/*.png
+day1/step03/*.png
+day1/step04/*.png
+# 제출과 관계없는 작업 기록·초안은 로컬에 보존한다.
+/PROJECT_CONTEXT.md
+/build_day1_report.py
+/day1_*.py
+/run_scratch.py
+/30-ESSHealth-scratch-executed.ipynb
+/day1/*
+!/day1/readable_figures/
+!/day1/step01/
+!/day1/step03/
+/day1/step01/*
+!/day1/step01/batch_summary.json
+/day1/step03/*
+!/day1/step03/candidate_features.json
+/output/*
+!/output/pdf/
