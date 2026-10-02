@@ -6,30 +6,48 @@
   "blank_first_record": "mark the corroborated empty Batch1 first record missing; preserve cycle numbers",
   "life_outlier_candidates": "retain; report long-life subgroup errors",
   "capacity_spikes": "retain raw values; prioritize median and IQR candidates",
-  "feature_strategy": "core5_plus_separate_additions_and_substitutions",
-  "target_transform": "compare_identity_and_log_on_Batch1",
-  "model_scope": "dummy_univariate_ridge_elasticnet_randomforest_gradientboosting",
-  "validation_strategy": "policy_group_holdout20percent_and_5fold_group_cv_on_Batch1_development",
-  "knee_analysis": "continuous_two_segment_linear_candidate_on_three_representative_lifetime_curves_EDA_only",
-  "campus_class": "울산_3반",
-  "team_names": "U090 이나현",
+  "deep_learning": false,
   "primary_metric": "MAPE (%)",
   "reference_benchmark": "assignment reference MAPE 9.1%; cohort and split differ from paper",
-  "deep_learning": false,
-  "model_training_started": false,
-  "core_features": [
-    "deltaq_log10var",
-    "qd_median",
-    "qd_iqr",
-    "qd_change100_10",
-    "temp_mean"
-  ],
-  "feature_comparisons": [
-    "replace deltaq_log10var with deltaq_min",
-    "add charge_median and parsed policy C-rate variables as a separate condition group",
-    "compare core group without qd_iqr (D1)",
-    "compare core group without qd_change100_10 (D2)"
-  ],
+  "feature_groups": {
+    "A": [
+      "deltaq_log10var",
+      "qd_median",
+      "qd_iqr",
+      "qd_change100_10",
+      "temp_mean"
+    ],
+    "B": [
+      "deltaq_min",
+      "qd_median",
+      "qd_iqr",
+      "qd_change100_10",
+      "temp_mean"
+    ],
+    "C": [
+      "deltaq_log10var",
+      "qd_median",
+      "qd_iqr",
+      "qd_change100_10",
+      "temp_mean",
+      "charge_median",
+      "policy_c1",
+      "policy_switch_pct",
+      "policy_c2"
+    ],
+    "D1": [
+      "deltaq_log10var",
+      "qd_median",
+      "qd_change100_10",
+      "temp_mean"
+    ],
+    "D2": [
+      "deltaq_log10var",
+      "qd_median",
+      "qd_iqr",
+      "temp_mean"
+    ]
+  },
   "ir_policy": "defer from baseline until additional zero readings are verified",
   "tuning_search": "small_grid_search",
   "random_state": 42,
@@ -91,87 +109,6 @@
       "min_samples_leaf_fixed": 3
     }
   },
-  "campus_display": "울산 캠퍼스 3반",
-  "batch3_evaluation": true,
-  "report_style": "white background, black/gray type and tables; muted charcoal/brown/olive charts; no blue palette",
-  "report_typography": "NanumGothic regular/bold; 11.5pt body, 19pt leading",
-  "early100_display": "Batch-wise median lines and Q25-Q75 bands; raw individual traces preserved in source figures",
-  "feature_groups": {
-    "A": [
-      "deltaq_log10var",
-      "qd_median",
-      "qd_iqr",
-      "qd_change100_10",
-      "temp_mean"
-    ],
-    "B": [
-      "deltaq_min",
-      "qd_median",
-      "qd_iqr",
-      "qd_change100_10",
-      "temp_mean"
-    ],
-    "C": [
-      "deltaq_log10var",
-      "qd_median",
-      "qd_iqr",
-      "qd_change100_10",
-      "temp_mean",
-      "charge_median",
-      "policy_c1",
-      "policy_switch_pct",
-      "policy_c2"
-    ],
-    "D1": [
-      "deltaq_log10var",
-      "qd_median",
-      "qd_change100_10",
-      "temp_mean"
-    ],
-    "D2": [
-      "deltaq_log10var",
-      "qd_median",
-      "qd_iqr",
-      "temp_mean"
-    ]
-  },
-  "redundancy_ablation_approved": true,
-  "tuning_fit_count_without_baselines": 1450,
-  "additional_EDA_methods": {
-    "user_selected": true,
-    "C_rate": "Continuous C1/C2/switch, separate per-batch Spearman correlations",
-    "current": "Cycle10 first20min positive-current time-weighted mean and RMS",
-    "early_degradation": "Theil-Sen cycles10-100; plot negative slope in microAh/cycle",
-    "scope": "Descriptive EDA only; existing model input groups unchanged"
-  },
-  "calculation_contract": {
-    "capacity_unit": "Ah",
-    "temperature_unit": "degC",
-    "charge_time_unit": "min",
-    "switch_unit": "percent",
-    "deltaq_variance_ddof": 1,
-    "quantile_method": "linear",
-    "cv_group_source": "raw policy string",
-    "cv_shuffle": false,
-    "training_error": "final model fitted on development35, scored on same35",
-    "cross_validation_error": "held-out fold predictions; separate from Train error"
-  },
-  "pending_selection_rules": [],
   "cv_score_aggregation": "unweighted arithmetic mean of five fold MAPE percentages",
-  "final_selection_rule": "minimum unrounded mean CV MAPE among compared candidates",
-  "selection_rules_user_confirmed": true,
-  "auxiliary_cv_statistics": [
-    "foldwise MAPE and variability",
-    "pooled OOF cell MAPE",
-    "MAE and RMSE"
-  ],
-  "submission_cover": {
-    "physical_page": 1,
-    "page_number_printed": false,
-    "title": "초기 100사이클 기반 배터리 총수명 예측",
-    "author": "U090 이나현",
-    "campus_class": "울산 캠퍼스 3반",
-    "submission_date": "2026-10-01",
-    "style": "white background; black and gray NanumGothic typography"
-  }
+  "final_selection_rule": "minimum unrounded mean CV MAPE among compared candidates"
 }

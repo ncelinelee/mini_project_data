@@ -1,6 +1,5 @@
 {
   "algorithm": "sorted unique policy labels; RandomState(42) permutation; ceil(20% groups) holdout",
-  "planned_day2_equivalent": "GroupShuffleSplit(n_splits=1,test_size=0.2,random_state=42)",
   "seed": 42,
   "holdout_group_fraction": 0.2,
   "development_cells": 35,
@@ -64,6 +63,5 @@
     "6C(50%)-3C",
     "7C(30%)-3.6C"
   ],
-  "cv_plan": "5-fold GroupKFold on development only",
-  "predictive_models_fitted": false
+  "cv_plan": "5-fold GroupKFold on development only"
 }

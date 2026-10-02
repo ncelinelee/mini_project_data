@@ -54,22 +54,12 @@ def prepare(data_dir=ROOT / "data-30", output=DEFAULT_OUTPUT):
     df, audit = extract_features(data_dir)
     df.to_csv(output / "features.csv", index=False)
     write_json(output / "processing_audit.json", audit)
-    # The old table is an independent DAY1 parity check, never the extraction source.
-    reference = ROOT / "day1/step03/candidate_features.json"
-    if reference.exists():
-        old = pd.DataFrame(json.loads(reference.read_text())).set_index("cell_id")
-        new = df.set_index("cell_id")
-        for field in INPUT_FIELDS + ["cycle_life"]:
-            np.testing.assert_allclose(new[field], old.loc[new.index, field].astype(float),
-                                       rtol=1e-12, atol=1e-12, equal_nan=True)
-        print("DAY1 피처와 원본 재생성 피처가 일치합니다.", flush=True)
     write_json(output / "data_manifest.json", {
         "created_at_utc": datetime.now(timezone.utc).isoformat(),
         "files": [{"batch": batch, "filename": name,
                    "bytes": (Path(data_dir) / name).stat().st_size} for batch, name in BATCHES.items()],
         "feature_sha256": digest(output / "features.csv"),
         "total_cells": len(df), "labelled_cells": int(df.target_available.sum()),
-        "day1_parity_check": "passed" if reference.exists() else "not_available",
         "feature_window": "original cycles 1-100", "interpolation": "none; common voltage grid",
     })
     return df

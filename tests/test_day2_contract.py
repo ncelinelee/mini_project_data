@@ -1,5 +1,4 @@
 """데이터 누출, 원래 사이클 번호, 점수 단위를 검증하는 계약 테스트."""
-import json
 from pathlib import Path
 import unittest
 
@@ -61,8 +60,8 @@ class ContractTests(unittest.TestCase):
 
     def test_fixed_split_and_no_policy_overlap(self):
         design, holdout = load_design()
-        reference = json.loads((ROOT / "day1/step03/candidate_features.json").read_text())
-        dev, valid, folds, _ = make_splits(pd.DataFrame(reference), holdout)
+        reference = pd.read_csv(ROOT / "day2/results/features.csv")
+        dev, valid, folds, _ = make_splits(reference, holdout)
         self.assertEqual((len(dev), len(valid)), (35, 11))
         all_validation = []
         for train, test in folds:

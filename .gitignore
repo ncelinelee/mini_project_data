@@ -1,38 +1,49 @@
+# Local environment, raw data, and private configuration
 .venv/
 __pycache__/
 .ipynb_checkpoints/
 .DS_Store
-# 원본 데이터는 다운로드 방법을 README에 안내한다.
-data-30/
 *.mat
-tmp/
 *.log
 .env
 .env.*
-day2/notebook_results/
-day2/reproduction_results/
-# DAY1의 중간 배열과 초안 그래프는 제출 자료에서 제외한다.
-day1/step01/*.npz
-day1/step02/*.npz
-day1/step03/*.npz
-day1/simple_chart_proposals/
-day1/step01/*.png
-day1/step02/*.png
-day1/step03/*.png
-day1/step04/*.png
-# 제출과 관계없는 작업 기록·초안은 로컬에 보존한다.
+/data-30/
+/tmp/
+# Local DAY1 artifacts and submission-authoring tools
+/day1/
+/output/
 /PROJECT_CONTEXT.md
 /build_day1_report.py
 /day1_*.py
 /run_scratch.py
 /30-ESSHealth-scratch-executed.ipynb
-/day1/*
-!/day1/readable_figures/
-!/day1/step01/
-!/day1/step03/
-/day1/step01/*
-!/day1/step01/batch_summary.json
-/day1/step03/*
-!/day1/step03/candidate_features.json
-/output/*
-!/output/pdf/
+/Day2_Battery_Cycle_Life.ipynb
+/tools/
+/docs/submission_audit.md
+/docs/reflection.md
+/day2/predict.py
+# Intermediate experiment arrays and internal verification records
+/day2/notebook_results/
+/day2/reproduction_results/
+/day2/results/*
+!/day2/results/features.csv
+!/day2/results/cv_results.csv
+!/day2/results/cv_splits.json
+!/day2/results/selection.json
+!/day2/results/model_performance.csv
+!/day2/results/model_performance_batch3.csv
+!/day2/results/metrics.csv
+!/day2/results/predictions.csv
+!/day2/results/subgroup_metrics.csv
+!/day2/results/largest_errors.csv
+!/day2/results/feature_range_shift.csv
+!/day2/results/long_life_cells.csv
+!/day2/results/permutation_importance_valid.csv
+!/day2/results/linear_coefficients.csv
+!/day2/results/feature_group_comparison.csv
+!/day2/results/matched_feature_comparison.csv
+!/day2/results/performance_gaps.json
+!/day2/results/run_manifest.json
+!/day2/results/estimator_parameters.json
+!/day2/results/figures/
+!/day2/results/models/
