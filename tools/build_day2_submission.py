@@ -40,6 +40,7 @@ def main():
     score_table = table(pd.concat([scores.iloc[:1], cvrow, scores.iloc[1:]], ignore_index=True))
     coefficient = pd.read_csv(RESULTS / "linear_coefficients.csv") if (RESULTS / "linear_coefficients.csv").exists() else None
     gaps = json.loads((RESULTS / "performance_gaps.json").read_text())
+    reflection = (ROOT / "docs/reflection.md").read_text().strip()
     readme = f'''# 초기 100사이클 기반 배터리 총수명 예측
 
 DS Mini Project · 울산 캠퍼스 3반 · **U090 이나현**
@@ -184,6 +185,8 @@ Valid 11셀에서 피처를 30회 섞었을 때 ΔQ log분산의 평균 MAPE 증
 논문은 초기 100사이클을 이용한 수명 예측에서 9.1% 테스트 오차를 보고했다. 본 Batch2 Test는 40.81%로 참고값보다 {gaps['test_batch2_minus_paper_pp']:.2f}pp 크고, Batch3 추가 평가는 12.65%로 {gaps['batch3_minus_paper_pp']:.2f}pp 크다. CV 6.23%만으로 논문보다 우수하다고 판단할 수 없다. [원논문](https://web.mit.edu/braatzgroup/Severson_NatureEnergy_2019.pdf)
 
 논문의 정제된 124셀(학습41·1차 테스트43·2차 테스트40)과 달리 이번 실험은 원본 139셀 중 수명 확인 129셀을 사용하며 정책 그룹으로 분리했다. 저자 코드의 연속 실험 연결·제외 처리까지 동일하게 재현한 실험이 아니다. DAY1 EDA에서 Valid·Batch2·Batch3 수명을 이미 확인했으므로 완전히 미관측한 테스트라고 주장하지 않는다. 비교값은 조건 차이를 명시한 참고다.
+
+{reflection}
 
 ## ESS 활용과 한계
 
@@ -351,13 +354,14 @@ display(Image(filename=str(OUTPUT / 'figures/06_feature_contribution.png'), widt
 
 논문은 정제된 124셀(41/43/40), 본 실험은 원본 139셀 중 수명 확인 129셀과 정책별 분리를 사용한다. 저자의 연속 실험 연결과 제외까지 동일한 재현이 아니다. DAY1에서 평가 대상 수명을 이미 EDA로 확인한 점도 한계다. [원논문](https://web.mit.edu/braatzgroup/Severson_NatureEnergy_2019.pdf)""")
     code("display(pd.Series(json.loads((OUTPUT / 'performance_gaps.json').read_text())))")
-    md("""## 8. ESS 활용과 한계
+    md(reflection.replace("## 실험을 통해 배운 점과 다음에 확인할 내용", "## 8. 실험을 통해 배운 점과 다음에 확인할 내용", 1))
+    md("""## 9. ESS 활용과 한계
 
 초기 수명 위험의 선별과 추가 점검 우선순위를 정하는 보조 신호로 검토할 수 있다. 다만 실험실의 LFP/graphite 셀과 고속 충전 조건은 실제 ESS의 부하·온도·달력 열화·팩 운용을 대표하지 않는다. Batch2 과대 예측은 단수명 위험을 낮게 평가할 수 있어 직접적인 교체·안전 제어에 적용할 근거가 부족하다.
 
 별도의 ESS 운용 데이터, 수명 정의 일치, 입력 범위 점검과 외부 검증이 필요하다. 이번 평가값으로 재튜닝한 결과를 기존 테스트와 섞지 않는다. [실험 조건](https://web.mit.edu/braatzgroup/Severson_NatureEnergy_2019.pdf)
 
-## 9. 재현 기록과 산출물
+## 10. 재현 기록과 산출물
 
 설정·분할·예측·모델·환경을 저장했다. 모델을 재로딩한 예측 일치와 선정 파일이 평가 중 바뀌지 않았음을 확인한다. 데이터 누출 관련 계약 검증은 `python -m unittest discover -s tests -v`로 실행한다.""")
     code("""manifest = json.loads((OUTPUT / 'run_manifest.json').read_text())
