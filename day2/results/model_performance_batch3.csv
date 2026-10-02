@@ -1,0 +1,10 @@
+구분,비교,MAPE (%),비고
+Train (Batch 1 CV),,6.229801342099653,개발35셀·정책별5-fold MAPE의 산술평균
+Valid (Batch 1 Hold-out),,14.965119123310197,11셀·개발과 충전 정책이 겹치지 않는 hold-out
+Test (Batch 2),,40.812669092580194,39셀·선정한 동일 모델로 최종 평가
+,Gap (Train-Valid),8.735317781210544,"Valid−Train(CV), pp; (+) 내부 검증 악화"
+,Gap (Valid-Test),25.84754996927,"Test(Batch2)−Valid, pp; (+) 배치 일반화 저하"
+,Gap (Target-Test),31.712669092580192,"Test(Batch2)−9.1%, pp; 과제 Target"
+Test (Batch 3),,12.651746199135887,44셀·같은 모델의 추가 평가
+,Gap (Batch2-Batch3),28.160922893444308,"Batch2−Batch3, pp; (+) Batch2 오차가 더 큼"
+,Gap (Target-Test),3.551746199135888,"Test(Batch3)−9.1%, pp; 과제 공통 Target"

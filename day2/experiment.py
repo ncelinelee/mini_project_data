@@ -19,6 +19,8 @@ from .data import BATCHES, INPUT_FIELDS, extract_features
 from .modeling import (build_estimator, candidate_specs, evaluate_candidate,
                        fitted_pipeline, make_splits, metrics)
 
+from .reporting import performance_tables
+
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT = ROOT / "day2/results"
 
@@ -141,7 +143,7 @@ def evaluate(df=None, output=DEFAULT_OUTPUT):
                  "selection": winner, "sklearn_version": importlib.metadata.version("scikit-learn")},
                 model_dir / "selected_model.joblib")
     evaluated, score_rows = [], []
-    splits = [("Train", dev), ("Valid", valid),
+    splits = [("Fit_Batch1", dev), ("Valid", valid),
               ("Test_Batch2", df.loc[(df.batch == "Batch2") & df.target_available]),
               ("Additional_Batch3", df.loc[(df.batch == "Batch3") & df.target_available])]
     for name, rows in splits:
@@ -180,17 +182,10 @@ def evaluate(df=None, output=DEFAULT_OUTPUT):
                 "below_development_min": int((rows[feature] < lo).sum()),
                 "above_development_max": int((rows[feature] > hi).sum())})
     pd.DataFrame(shift_rows).to_csv(output / "feature_range_shift.csv", index=False)
-    gap = scores.set_index("split").mape_pct
-    write_json(output / "performance_gaps.json", {
-        "valid_minus_train_pp": float(gap.Valid - gap.Train),
-        "valid_minus_cv_pp": float(gap.Valid - winner["mean_cv_mape_pct"]),
-        "test_batch2_minus_valid_pp": float(gap.Test_Batch2 - gap.Valid),
-        "test_batch2_minus_paper_pp": float(gap.Test_Batch2 - 9.1),
-        "batch3_minus_paper_pp": float(gap.Additional_Batch3 - 9.1),
-        "paper_reference_mape_pct": 9.1,
-        "comparable_protocol": False,
-        "interpretation": "positive means the first-named error is larger; percentage points",
-    })
+    mandatory, additional, gaps = performance_tables(scores, winner)
+    mandatory.to_csv(output / "model_performance.csv", index=False)
+    additional.to_csv(output / "model_performance_batch3.csv", index=False)
+    write_json(output / "performance_gaps.json", gaps)
     # Interpretation only: this does not change model selection after evaluation.
     importance = permutation_importance(estimator, valid[winner["features"]], valid.cycle_life,
         scoring="neg_mean_absolute_percentage_error", n_repeats=30, random_state=42, n_jobs=1)

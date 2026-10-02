@@ -10,7 +10,9 @@ DS Mini Project · 울산 캠퍼스 3반 · **U090 이나현**
 
 - [실행 결과가 포함된 분석 노트북](Day2_Battery_Cycle_Life.ipynb): EDA 해석 → 피처 생성 → 모델 비교·튜닝 → 최종 평가 → 오류·도메인 해석
 - [모델·피처·하이퍼파라미터 설명](docs/modeling.md): 각 선택의 이유와 설정값의 역할
+- [제출 조건·루브릭 대조](docs/submission_audit.md): 요구 내용과 실제 산출물의 위치, 확인된 한계
 - [DAY1 설계 보고서](output/pdf/DS-MINI-Design-울산_3반-U090%20이나현.pdf)
+- [과제 양식 성능 표](day2/results/model_performance.csv), [Batch3 추가 표](day2/results/model_performance_batch3.csv)
 - [선정 결과](day2/results/selection.json), [전체 CV 비교](day2/results/cv_results.csv), [셀별 예측](day2/results/predictions.csv)
 
 ## 실행 환경과 재현 방법
@@ -18,6 +20,8 @@ DS Mini Project · 울산 캠퍼스 3반 · **U090 이나현**
 검증한 환경은 Python 3.11.15, scikit-learn 1.9.1이다. CPU로 실행하며 설치 버전은 [requirements.txt](requirements.txt), 실행 환경·소스 해시는 [run_manifest.json](day2/results/run_manifest.json)에 기록했다.
 
 ```bash
+git clone https://github.com/ncelinelee/mini_project_data.git
+cd mini_project_data
 python3.11 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
@@ -83,69 +87,42 @@ Batch1에서 정책 그룹의 20%를 seed=42로 보류했다. 개발 35셀·18�
 
 ## 모델 비교 결과
 
-각 모델에서 가장 낮은 CV 평균 점수를 얻은 조합을 제시한다. 폴드 표준편차는 점수 변동의 기술 통계이며 신뢰구간이 아니다.
+모델별 최저 CV MAPE는 다음과 같다. 모델·피처군·목표 변환을 함께 선정한 결과다. 설정값은 [전체 비교](day2/results/cv_results.csv)와 노트북에서 확인할 수 있다.
 
-| model | feature_group | target_transform | mean_cv_mape_pct | std_cv_mape_pct | params_json |
-| --- | --- | --- | --- | --- | --- |
-| ElasticNet | D1 | ln | 6.230 | 1.891 | {"alpha": 0.01, "l1_ratio": 0.5} |
-| Ridge | D1 | identity | 6.493 | 1.724 | {"alpha": 0.1} |
-| Univariate | univariate | ln | 7.134 | 2.410 | {} |
-| GradientBoosting | D2 | ln | 9.072 | 4.414 | {"learning_rate": 0.1, "max_depth": 2, "n_estimators": 200} |
-| RandomForest | D2 | ln | 9.430 | 5.078 | {"max_depth": 2, "min_samples_leaf": 3} |
-| Mean | baseline | identity | 19.006 | 9.189 | {} |
-
-원수명 평균 기준선과 ln수명 기준선은 별도로 비교했다. 로그 기준선은 역변환 시 기하평균 예측이다.
-
-| model | target_transform | mean_cv_mape_pct | std_cv_mape_pct |
+| model | feature_group | target_transform | mean_cv_mape_pct |
 | --- | --- | --- | --- |
-| Univariate | ln | 7.134 | 2.410 |
-| Univariate | identity | 7.201 | 2.812 |
-| Mean | identity | 19.006 | 9.189 |
-| Mean | ln | 19.207 | 8.514 |
+| ElasticNet | D1 | ln | 6.230 |
+| Ridge | D1 | identity | 6.493 |
+| Univariate | univariate | ln | 7.134 |
+| GradientBoosting | D2 | ln | 9.072 |
+| RandomForest | D2 | ln | 9.430 |
+| Mean | baseline | identity | 19.006 |
 
 ![모델별 CV MAPE](day2/results/figures/01_model_comparison.png)
 
-ElasticNet이 탐색 범위에서 가장 낮은 CV MAPE를 얻었다. IQR을 제외한 D1은 기본 A군보다 낮은 오차를 보였다. 이것은 피처 중복을 제거한 비교의 결과이며 피처들의 독립성이나 인과관계를 증명하지 않는다.
+ElasticNet·D1·ln수명을 탐색 범위의 최저 CV 평균으로 선정했다. 같은 ElasticNet·ln수명·alpha=0.01·l1_ratio=0.5에서 IQR 제외 D1은 6.230%, 기본 A는 6.755%였다. 중복 피처 제거의 이득을 확인했지만 독립성이나 인과관계를 입증한 결과는 아니다. [동일 설정의 피처 비교](day2/results/matched_feature_comparison.csv)
 
-![피처군 비교](day2/results/figures/07_feature_group_comparison.png)
-
-위 그래프는 각 피처군 안에서 모델·파라미터를 고른 최저점이다. 피처 차이를 더 직접적으로 확인하기 위해 선정 모델의 같은 목표 변환과 파라미터를 적용한 후보도 대조한다.
-
-| feature_group | mean_cv_mape_pct | std_cv_mape_pct |
-| --- | --- | --- |
-| A | 6.755 | 1.238 |
-| B | 8.311 | 2.410 |
-| C | 7.280 | 0.776 |
-| D1 | 6.230 | 1.891 |
-| D2 | 6.686 | 1.310 |
-
-같은 ElasticNet·ln수명·alpha=0.01·l1_ratio=0.5에서 D1은 6.230%, A는 6.755%였다. 차이는 약 0.526pp이며 작은 개발 표본의 CV 비교 결과다. 충전 조건을 추가한 C군은 이 동일 설정에서 개선되지 않았다.
-
-## 최종 하이퍼파라미터와 해석
-
-- `alpha=0.01`: ln수명 기준의 전체 규제 강도. 학습 폴드의 입력을 표준화한 상태에서 비교했다.
-- `l1_ratio=0.5`: L1과 L2 규제의 비중을 함께 사용하는 설정이다.
-- `max_iter=10000`, `tol=1e-4`, `selection='cyclic'`, `fit_intercept=True`: 설계에서 고정한 수렴·절편 설정이다.
-
-![규제 강도 비교](day2/results/figures/05_selected_model_tuning.png)
-
-최종 입력은 ΔQ log분산·용량 중앙값·100-10 용량차·평균온도다. 이번 fit에서 평균온도 계수는 0이 되어 실제 예측 기여가 사라졌다. 피처군은 선정된 D1 그대로 보존했으며 평가 결과를 보고 다시 제거하지 않았다. [표준화 입력 계수](day2/results/linear_coefficients.csv)는 ln수명 단위이며 원래 수명의 사이클 증가량과 동일하게 해석하지 않는다.
+최종 입력은 ΔQ log분산·용량 중앙값·100-10 용량차·평균온도다. `alpha=0.01`은 전체 규제 강도, `l1_ratio=0.5`는 L1·L2 규제 비중이다. 고정 설정은 `max_iter=10000`, `tol=1e-4`, `selection='cyclic'`, `fit_intercept=True`다. 학습 폴드에서 입력을 표준화했다. 평균온도 계수는 0이지만 평가 후 피처군을 바꾸지 않았다. 모든 후보의 설정값·역할은 [모델 설명](docs/modeling.md)에 정리했다.
 
 ## 최종 성능
 
-MAPE는 백분율 오차, MAE·RMSE는 사이클 단위다. CV 행의 MAE·RMSE도 폴드 점수의 평균이다. Train은 학습한 같은 35셀의 오차이며 CV와 구분한다.
+과제의 **Train은 Batch1 개발 35셀의 정책별 5-fold MAPE 산술평균**이다. Valid는 독립 hold-out 11셀이다. MAPE는 %, Gap은 pp이며 아래 표에서 Gap 행의 단위를 구분한다. MAE·RMSE와 학습 셀 재예측 오차(Fit 5.858%)는 [보조 지표](day2/results/metrics.csv)에 별도로 보존한다.
 
-| split | n | mape_pct | mae_cycles | rmse_cycles |
-| --- | --- | --- | --- | --- |
-| Train | 35 | 5.858 | 50.787 | 66.478 |
-| CV (5-fold mean) | 35 | 6.230 | 54.652 | 70.631 |
-| Valid | 11 | 14.965 | 155.196 | 228.070 |
-| Test_Batch2 | 39 | 40.813 | 208.366 | 222.437 |
-| Additional_Batch3 | 44 | 12.652 | 160.200 | 256.478 |
+| 구분 | 비교 | MAPE (%) | 비고 |
+| --- | --- | --- | --- |
+| Train (Batch 1 CV) |  | 6.230 | 개발35셀·정책별5-fold MAPE의 산술평균 |
+| Valid (Batch 1 Hold-out) |  | 14.965 | 11셀·개발과 충전 정책이 겹치지 않는 hold-out |
+| Test (Batch 2) |  | 40.813 | 39셀·선정한 동일 모델로 최종 평가 |
+|  | Gap (Train-Valid) | 8.735 | Valid−Train(CV), pp; (+) 내부 검증 악화 |
+|  | Gap (Valid-Test) | 25.848 | Test(Batch2)−Valid, pp; (+) 배치 일반화 저하 |
+|  | Gap (Target-Test) | 31.713 | Test(Batch2)−9.1%, pp; 과제 Target |
+| Test (Batch 3) |  | 12.652 | 44셀·같은 모델의 추가 평가 |
+|  | Gap (Batch2-Batch3) | 28.161 | Batch2−Batch3, pp; (+) Batch2 오차가 더 큼 |
+|  | Gap (Target-Test) | 3.552 | Test(Batch3)−9.1%, pp; 과제 공통 Target |
 
 ![실제 수명과 예측 수명](day2/results/figures/02_actual_vs_predicted.png)
 
-Valid-Train은 9.11pp, Valid-CV는 8.74pp, Batch2 Test-Valid는 25.85pp다. 양수는 앞에 적힌 평가 오차가 더 크다는 의미다.
+과제의 행 이름을 유지하되 (+)가 악화를 나타내도록 **Train-Valid 행은 Valid−Train(CV)**, Valid-Test 행은 Test(Batch2)−Valid, Target-Test 행은 해당 Test−9.1%로 계산했다. 내부 Gap 8.74pp는 소표본·정책 구성과 후보 선정의 낙관성을 포함할 수 있어 과적합의 단독 증거로 보지 않는다. Batch2-Batch3는 B2−B3=28.16pp로, Batch2 오차가 더 크다는 뜻이다.
 
 ## 오류 분석과 Batch 차이
 
@@ -161,9 +138,11 @@ Valid의 >1000사이클 3셀 MAPE는 34.60%로 과대 예측이 두드러졌다.
 
 Valid 11셀에서 피처를 30회 섞었을 때 ΔQ log분산의 평균 MAPE 증가가 가장 컸다. 용량차의 증가값은 약 -0.10pp로 작은 음수였다. 이 검증 표본에서 기여가 명확하지 않다는 의미이며 피처가 유해하다는 인과적 결론은 아니다. 평가 후 모델 변경에는 사용하지 않았다.
 
+Batch3는 전체 MAPE가 Batch2보다 낮지만 장수명 구간의 오차가 남는다. 수명 분포와 MAPE의 분모가 다르므로 전체 평균만으로 특정 배치에 대한 과적합을 단정하지 않는다. 공통 전압 격자에서 같은 셀의 ΔQ를 계산했지만, 배치별 곡선 시작점 차이를 물리적으로 정렬·보정했는지는 검증하지 않았다. 스파이크·장수명 셀은 기록 오류 근거가 없어 보존했다. [추가 검증의 한계](docs/modeling.md#batch3의-추가-검증-한계)
+
 ## 논문 성능과 비교
 
-논문은 초기 100사이클을 이용한 수명 예측에서 9.1% 테스트 오차를 보고했다. 본 Batch2 Test는 40.81%로 참고값보다 31.71pp 크고, Batch3 추가 평가는 12.65%로 3.55pp 크다. CV 6.23%만으로 논문보다 우수하다고 판단할 수 없다. [원논문](https://web.mit.edu/braatzgroup/Severson_NatureEnergy_2019.pdf)
+과제에서 제시한 원논문 회귀 성능 기준은 MAPE 9.1%다. 본 Batch2 Test는 40.81%로 참고값보다 31.71pp 크고, Batch3 추가 평가는 12.65%로 3.55pp 크다. CV 6.23%만으로 논문보다 우수하다고 판단할 수 없다. [원논문](https://web.mit.edu/braatzgroup/Severson_NatureEnergy_2019.pdf)
 
 논문의 정제된 124셀(학습41·1차 테스트43·2차 테스트40)과 달리 이번 실험은 원본 139셀 중 수명 확인 129셀을 사용하며 정책 그룹으로 분리했다. 저자 코드의 연속 실험 연결·제외 처리까지 동일하게 재현한 실험이 아니다. DAY1 EDA에서 Valid·Batch2·Batch3 수명을 이미 확인했으므로 완전히 미관측한 테스트라고 주장하지 않는다. 비교값은 조건 차이를 명시한 참고다.
 
@@ -210,6 +189,7 @@ Day2_Battery_Cycle_Life.ipynb  # 실행 결과·그래프·해석
 day2/data.py                 # 원본에서 초기 피처 생성
 day2/modeling.py             # 분리·모델·Grid·점수
 day2/experiment.py           # 추출 → 튜닝 → 최종 평가
+day2/reporting.py            # 과제 양식 성능 표·Gap
 day2/plots.py                # 결과 그래프
 day2/predict.py              # 저장 모델로 피처 CSV 예측
 day2/config/                 # DAY1의 고정 설계와 셀 분리

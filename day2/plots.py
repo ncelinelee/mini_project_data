@@ -10,9 +10,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-COLORS = {"Train": "#777777", "Valid": "#454545", "Test_Batch2": "#A56B3F",
+COLORS = {"Fit_Batch1": "#777777", "Valid": "#454545", "Test_Batch2": "#A56B3F",
           "Additional_Batch3": "#69754C"}
-NAMES = {"Train": "Train · Batch1", "Valid": "Valid · Batch1",
+NAMES = {"Fit_Batch1": "Fit · Batch1 (same training cells)", "Valid": "Valid · Batch1",
          "Test_Batch2": "Test · Batch2", "Additional_Batch3": "Additional · Batch3"}
 FEATURE_LABELS = {"deltaq_log10var": "log10 variance of Delta Q", "deltaq_min": "Minimum Delta Q",
     "qd_median": "Median discharge capacity", "qd_iqr": "IQR of discharge capacity",
@@ -81,7 +81,7 @@ def make_figures(output):
     groups = pd.read_csv(output / "subgroup_metrics.csv")
     fig, axes = plt.subplots(1, 3, figsize=(15, 4.8), sharey=True)
     group_names = ["<500", "500-1000", ">1000"]
-    ymax = groups[groups.split != "Train"].mape_pct.max() * 1.3
+    ymax = groups[groups.split != "Fit_Batch1"].mape_pct.max() * 1.3
     for ax, split in zip(axes, list(COLORS)[1:]):
         sub = groups[groups.split == split].set_index("life_group")
         values = [sub.loc[g, "mape_pct"] if g in sub.index else 0 for g in group_names]

@@ -1,10 +1,18 @@
 {
-  "valid_minus_train_pp": 9.107297189414659,
-  "valid_minus_cv_pp": 8.735317781210544,
+  "train_batch1_cv_mape_pct": 6.229801342099653,
+  "valid_minus_train_cv_pp": 8.735317781210544,
+  "valid_minus_fit_pp": 9.107297189414659,
   "test_batch2_minus_valid_pp": 25.84754996927,
   "test_batch2_minus_paper_pp": 31.712669092580192,
+  "batch2_minus_batch3_pp": 28.160922893444308,
   "batch3_minus_paper_pp": 3.551746199135888,
   "paper_reference_mape_pct": 9.1,
   "comparable_protocol": false,
-  "interpretation": "positive means the first-named error is larger; percentage points"
+  "gap_formulas": {
+    "Gap (Train-Valid)": "Valid - Train (Batch 1 CV)",
+    "Gap (Valid-Test)": "Test (Batch 2) - Valid",
+    "Gap (Target-Test)": "Test - Target",
+    "Gap (Batch2-Batch3)": "Test (Batch 2) - Test (Batch 3)"
+  },
+  "interpretation": "MAPE is percent; differences are percentage points. Positive B2-B3 means Batch2 error is larger."
 }

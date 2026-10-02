@@ -28,6 +28,7 @@ def main():
     output = ROOT / "day2/results"
     baseline_cv = pd.read_csv(output / "cv_results.csv")
     baseline_predictions = pd.read_csv(output / "predictions.csv")
+    baseline_predictions["split"] = baseline_predictions["split"].replace({"Train": "Fit_Batch1"})
     baseline_selection = json.loads((output / "selection.json").read_text())
     notebook = nbformat.read(path, as_version=4)
     client = NotebookClient(notebook, timeout=180, kernel_name="battery-day2",
@@ -46,6 +47,18 @@ def main():
         actual = metrics(rows.cycle_life, rows.prediction)
         for field, value in actual.items():
             np.testing.assert_allclose(value, score_table.loc[split, field], rtol=1e-10, atol=1e-10)
+    report = pd.read_csv(output / "model_performance.csv")
+    extra = pd.read_csv(output / "model_performance_batch3.csv")
+    cv_mean = np.mean([f["mape_pct"] for f in winner["fold_results"]])
+    valid = score_table.loc["Valid", "mape_pct"]
+    batch2 = score_table.loc["Test_Batch2", "mape_pct"]
+    batch3 = score_table.loc["Additional_Batch3", "mape_pct"]
+    np.testing.assert_allclose(report["MAPE (%)"],
+        [cv_mean, valid, batch2, valid-cv_mean, batch2-valid, batch2-9.1], atol=1e-12)
+    np.testing.assert_allclose(extra["MAPE (%)"].iloc[6:],
+        [batch3, batch2-batch3, batch3-9.1], atol=1e-12)
+    assert report.iloc[0]["구분"] == "Train (Batch 1 CV)"
+    assert report.iloc[1]["구분"] == "Valid (Batch 1 Hold-out)"
     details = json.loads((output / "cv_details.json").read_text())
     for candidate in details:
         expected = np.mean([fold["mape_pct"] for fold in candidate["fold_results"]])
@@ -70,6 +83,7 @@ def main():
         "full_grid_reproduction": "all 294 candidate CV scores matched within 1e-10",
         "prediction_reproduction": "all 129 predictions matched within 1e-10",
         "minimum_unrounded_fold_mean_selection": "passed", "score_recalculation": "passed",
+        "assignment_reporting_cv_train_and_gap_formulas": "passed",
         "missing_targets_excluded": "passed", "all_oof_cells_predicted_once_per_candidate": "passed",
         "contract_tests": "5 tests passed separately",
         "graph_visual_review": "seven final charts reviewed",
