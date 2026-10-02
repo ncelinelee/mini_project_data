@@ -41,11 +41,12 @@ cd mini_project_data
 python3.11 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
+python -m ipykernel install --user --name ess-battery --display-name "ESS Battery (Python 3.11)"
 python -m day2.experiment --data-dir data-30 --jobs 4
 python -m unittest discover -s tests -v
 ```
 
-노트북은 위 가상환경을 커널로 선택하고 전체 실행한다. 하나의 노트북에 EDA 해석·피처 생성·모델 비교·평가를 순서대로 담았다. 원본 데이터와 가상환경은 저장소에 포함하지 않는다.
+노트북은 `ESS Battery (Python 3.11)` 커널을 선택하고 전체 실행한다. 하나의 노트북에 EDA 해석·피처 생성·모델 비교·평가를 순서대로 담았다. 원본 데이터와 가상환경은 저장소에 포함하지 않는다.
 
 ## EDA
 

@@ -15,7 +15,7 @@ import numpy as np
 import pandas as pd
 from sklearn.inspection import permutation_importance
 
-from .data import BATCHES, INPUT_FIELDS, extract_features
+from .data import BATCHES, extract_features
 from .modeling import (build_estimator, candidate_specs, evaluate_candidate,
                        fitted_pipeline, make_splits, metrics)
 
@@ -96,6 +96,13 @@ def tune(df=None, output=DEFAULT_OUTPUT, jobs=4):
                   total_cv_fits=1470, elapsed_seconds=time.perf_counter() - started)
     # Freeze the winner before opening evaluation splits.
     write_json(output / "selection.json", winner)
+    # Compare feature definitions at the same selected model settings.
+    matched = table[(table.model == winner["model"]) &
+                    (table.target_transform == winner["target_transform"]) &
+                    (table.params_json == winner["params_json"])][[
+                        "feature_group", "mean_cv_mape_pct", "std_cv_mape_pct"]]
+    matched.sort_values("feature_group").to_csv(
+        output / "matched_feature_comparison.csv", index=False)
     print(f"CV 선정 완료: {winner['model']} / {winner['feature_group']} / "
           f"{winner['target_transform']} / MAPE {winner['mean_cv_mape_pct']:.3f}%", flush=True)
     return winner
@@ -204,7 +211,10 @@ def evaluate(df=None, output=DEFAULT_OUTPUT):
         "selection_sha256": frozen_hash, "feature_sha256": digest(output / "features.csv"),
         "design_sha256": digest(ROOT / "day2/config/design.json"),
         "holdout_sha256": digest(ROOT / "day2/config/holdout.json"),
-        "source_sha256": {str(p.relative_to(ROOT)): digest(p) for p in sorted((ROOT / "day2").glob("*.py"))},
+        "source_sha256": {str(p.relative_to(ROOT)): digest(p) for p in
+                          [ROOT / "day2" / name for name in
+                           ["__init__.py", "data.py", "experiment.py", "modeling.py",
+                            "plots.py", "reporting.py"]]},
         "selection_unchanged_during_evaluation": True,
         "model_reload_prediction_check": "passed", "negative_prediction_count": int((predictions.prediction < 0).sum()),
         "convergence_warning_count_cv": sum(w["category"] == "ConvergenceWarning" for w in

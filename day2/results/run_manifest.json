@@ -1,5 +1,5 @@
 {
-  "completed_at_utc": "2026-10-02T00:40:48.561311+00:00",
+  "completed_at_utc": "2026-10-02T00:47:51.214150+00:00",
   "python": "3.11.15",
   "platform": "macOS-26.6.2-arm64-arm-64bit",
   "packages": {
@@ -11,17 +11,16 @@
     "joblib": "1.6.0",
     "matplotlib": "3.11.2"
   },
-  "selection_sha256": "c1497525733b0faaa380ac35655243ddca6eeff54fa97901bb611f37d0685edf",
+  "selection_sha256": "c54a2d0cc00eae29f4265d15e3d674832e5429949982ba7070549eaa837a3a53",
   "feature_sha256": "f688f93f6d5dcab785cb2e67d4f985570a676532ae471ef830148e62fe80cc07",
   "design_sha256": "65cfd313ce8bb5c9204e2caa2d6121b767c79bdec126ea4d7bd4df709b56dcf6",
   "holdout_sha256": "deca95507d60c817742c5420f3ebad18c173f85bbdf58a481956364789298ce0",
   "source_sha256": {
     "day2/__init__.py": "6a585befc2e89e7f3e031a9fc3f2b6681e606ec9caec4d0b34988ffceaa89f02",
     "day2/data.py": "d1e8b84d7cf8d247267be5b6c96a4c7c5cfc500d23368774d0226a7060fdfbbc",
-    "day2/experiment.py": "d03019ddd26a0b0fb2d4f36d18d90b6ed2941cc0ae5c260d1eb63a32be1b4640",
+    "day2/experiment.py": "d78b1be114d73680aabf2f395d5b92bc0f8aa9b4937a45d8c73ce6e4cea6d8f7",
     "day2/modeling.py": "f01c1a252fc5f5d2934a9ea2e1cea8918dea2d9750eaf1e88074383da2d0a558",
     "day2/plots.py": "1a0941b1955c2e2b970acef569f350556794ad312b80ce0563fa17e789df90d7",
-    "day2/predict.py": "20f8f36b7e0ab84a69fe662ecb570c08c75f447f51947657d8bd659b495ff17c",
     "day2/reporting.py": "5644e7c0ed717451bc6398542c23c36f5abadcbac5421859d1553201f46eb533"
   },
   "selection_unchanged_during_evaluation": true,
