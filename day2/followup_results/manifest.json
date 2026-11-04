@@ -1,0 +1,900 @@
+{
+  "data_scope": "Batch1 development 35 cells only",
+  "evaluation": "outer 5-fold GroupKFold; tuning inside 3-fold GroupKFold",
+  "selection_metric": "mean fold MAPE (%)",
+  "grid": [
+    {
+      "alpha": 0.001,
+      "l1_ratio": 0.2
+    },
+    {
+      "alpha": 0.001,
+      "l1_ratio": 0.5
+    },
+    {
+      "alpha": 0.001,
+      "l1_ratio": 0.8
+    },
+    {
+      "alpha": 0.01,
+      "l1_ratio": 0.2
+    },
+    {
+      "alpha": 0.01,
+      "l1_ratio": 0.5
+    },
+    {
+      "alpha": 0.01,
+      "l1_ratio": 0.8
+    },
+    {
+      "alpha": 0.1,
+      "l1_ratio": 0.2
+    },
+    {
+      "alpha": 0.1,
+      "l1_ratio": 0.5
+    },
+    {
+      "alpha": 0.1,
+      "l1_ratio": 0.8
+    }
+  ],
+  "reference_limit": "Fixed reference was selected on these development cells in the earlier experiment; its score is not independent.",
+  "independence_limit": "Follow-up motivated by previously observed Batch2 errors; no new independent test claim.",
+  "external_scoring_performed": false,
+  "features_sha256": "f688f93f6d5dcab785cb2e67d4f985570a676532ae471ef830148e62fe80cc07",
+  "source_sha256": "89d37dd6d8202905918012cec31112d836e2fc1a188c3ad5326fba0d1208a4b4",
+  "supporting_source_sha256": {
+    "day2/modeling.py": "f01c1a252fc5f5d2934a9ea2e1cea8918dea2d9750eaf1e88074383da2d0a558",
+    "day2/experiment.py": "d78b1be114d73680aabf2f395d5b92bc0f8aa9b4937a45d8c73ce6e4cea6d8f7",
+    "day2/config/holdout.json": "deca95507d60c817742c5420f3ebad18c173f85bbdf58a481956364789298ce0"
+  },
+  "packages": {
+    "numpy": "2.4.6",
+    "pandas": "3.0.6",
+    "scikit-learn": "1.9.1"
+  },
+  "folds": [
+    {
+      "fold": 1,
+      "train_ids": [
+        "Batch1-C05",
+        "Batch1-C06",
+        "Batch1-C07",
+        "Batch1-C08",
+        "Batch1-C09",
+        "Batch1-C10",
+        "Batch1-C11",
+        "Batch1-C12",
+        "Batch1-C13",
+        "Batch1-C16",
+        "Batch1-C17",
+        "Batch1-C22",
+        "Batch1-C23",
+        "Batch1-C24",
+        "Batch1-C25",
+        "Batch1-C26",
+        "Batch1-C27",
+        "Batch1-C30",
+        "Batch1-C31",
+        "Batch1-C36",
+        "Batch1-C37",
+        "Batch1-C38",
+        "Batch1-C39",
+        "Batch1-C40",
+        "Batch1-C41",
+        "Batch1-C42",
+        "Batch1-C43"
+      ],
+      "validation_ids": [
+        "Batch1-C03",
+        "Batch1-C04",
+        "Batch1-C20",
+        "Batch1-C21",
+        "Batch1-C32",
+        "Batch1-C33",
+        "Batch1-C44",
+        "Batch1-C45"
+      ],
+      "train_policies": [
+        "4.4C(80%)-4.4C",
+        "4.8C(80%)-4.8C",
+        "5.4C(40%)-3.6C",
+        "5.4C(50%)-3.6C",
+        "5.4C(50%)-3C",
+        "5.4C(60%)-3.6C",
+        "6C(30%)-3.6C",
+        "6C(40%)-3.6C",
+        "6C(40%)-3C",
+        "6C(50%)-3.6C",
+        "7C(40%)-3.6C",
+        "7C(40%)-3C",
+        "8C(15%)-3.6C",
+        "8C(25%)-3.6C"
+      ],
+      "validation_policies": [
+        "4C(80%)-4C",
+        "5.4C(80%)-5.4C",
+        "6C(60%)-3C",
+        "8C(35%)-3.6C"
+      ],
+      "inner_folds": [
+        {
+          "train_ids": [
+            "Batch1-C05",
+            "Batch1-C08",
+            "Batch1-C09",
+            "Batch1-C12",
+            "Batch1-C13",
+            "Batch1-C16",
+            "Batch1-C17",
+            "Batch1-C22",
+            "Batch1-C23",
+            "Batch1-C24",
+            "Batch1-C25",
+            "Batch1-C30",
+            "Batch1-C31",
+            "Batch1-C36",
+            "Batch1-C37",
+            "Batch1-C40",
+            "Batch1-C41"
+          ],
+          "validation_ids": [
+            "Batch1-C06",
+            "Batch1-C07",
+            "Batch1-C10",
+            "Batch1-C11",
+            "Batch1-C26",
+            "Batch1-C27",
+            "Batch1-C38",
+            "Batch1-C39",
+            "Batch1-C42",
+            "Batch1-C43"
+          ]
+        },
+        {
+          "train_ids": [
+            "Batch1-C06",
+            "Batch1-C07",
+            "Batch1-C08",
+            "Batch1-C09",
+            "Batch1-C10",
+            "Batch1-C11",
+            "Batch1-C16",
+            "Batch1-C17",
+            "Batch1-C24",
+            "Batch1-C25",
+            "Batch1-C26",
+            "Batch1-C27",
+            "Batch1-C36",
+            "Batch1-C37",
+            "Batch1-C38",
+            "Batch1-C39",
+            "Batch1-C42",
+            "Batch1-C43"
+          ],
+          "validation_ids": [
+            "Batch1-C05",
+            "Batch1-C12",
+            "Batch1-C13",
+            "Batch1-C22",
+            "Batch1-C23",
+            "Batch1-C30",
+            "Batch1-C31",
+            "Batch1-C40",
+            "Batch1-C41"
+          ]
+        },
+        {
+          "train_ids": [
+            "Batch1-C05",
+            "Batch1-C06",
+            "Batch1-C07",
+            "Batch1-C10",
+            "Batch1-C11",
+            "Batch1-C12",
+            "Batch1-C13",
+            "Batch1-C22",
+            "Batch1-C23",
+            "Batch1-C26",
+            "Batch1-C27",
+            "Batch1-C30",
+            "Batch1-C31",
+            "Batch1-C38",
+            "Batch1-C39",
+            "Batch1-C40",
+            "Batch1-C41",
+            "Batch1-C42",
+            "Batch1-C43"
+          ],
+          "validation_ids": [
+            "Batch1-C08",
+            "Batch1-C09",
+            "Batch1-C16",
+            "Batch1-C17",
+            "Batch1-C24",
+            "Batch1-C25",
+            "Batch1-C36",
+            "Batch1-C37"
+          ]
+        }
+      ]
+    },
+    {
+      "fold": 2,
+      "train_ids": [
+        "Batch1-C03",
+        "Batch1-C04",
+        "Batch1-C05",
+        "Batch1-C08",
+        "Batch1-C09",
+        "Batch1-C10",
+        "Batch1-C11",
+        "Batch1-C12",
+        "Batch1-C13",
+        "Batch1-C20",
+        "Batch1-C21",
+        "Batch1-C22",
+        "Batch1-C23",
+        "Batch1-C24",
+        "Batch1-C25",
+        "Batch1-C26",
+        "Batch1-C27",
+        "Batch1-C32",
+        "Batch1-C33",
+        "Batch1-C36",
+        "Batch1-C37",
+        "Batch1-C38",
+        "Batch1-C39",
+        "Batch1-C40",
+        "Batch1-C41",
+        "Batch1-C44",
+        "Batch1-C45"
+      ],
+      "validation_ids": [
+        "Batch1-C06",
+        "Batch1-C07",
+        "Batch1-C16",
+        "Batch1-C17",
+        "Batch1-C30",
+        "Batch1-C31",
+        "Batch1-C42",
+        "Batch1-C43"
+      ],
+      "train_policies": [
+        "4.4C(80%)-4.4C",
+        "4C(80%)-4C",
+        "5.4C(40%)-3.6C",
+        "5.4C(50%)-3.6C",
+        "5.4C(50%)-3C",
+        "5.4C(80%)-5.4C",
+        "6C(30%)-3.6C",
+        "6C(40%)-3.6C",
+        "6C(40%)-3C",
+        "6C(60%)-3C",
+        "7C(40%)-3.6C",
+        "7C(40%)-3C",
+        "8C(15%)-3.6C",
+        "8C(35%)-3.6C"
+      ],
+      "validation_policies": [
+        "4.8C(80%)-4.8C",
+        "5.4C(60%)-3.6C",
+        "6C(50%)-3.6C",
+        "8C(25%)-3.6C"
+      ],
+      "inner_folds": [
+        {
+          "train_ids": [
+            "Batch1-C05",
+            "Batch1-C08",
+            "Batch1-C09",
+            "Batch1-C12",
+            "Batch1-C13",
+            "Batch1-C20",
+            "Batch1-C21",
+            "Batch1-C22",
+            "Batch1-C23",
+            "Batch1-C24",
+            "Batch1-C25",
+            "Batch1-C32",
+            "Batch1-C33",
+            "Batch1-C36",
+            "Batch1-C37",
+            "Batch1-C40",
+            "Batch1-C41"
+          ],
+          "validation_ids": [
+            "Batch1-C03",
+            "Batch1-C04",
+            "Batch1-C10",
+            "Batch1-C11",
+            "Batch1-C26",
+            "Batch1-C27",
+            "Batch1-C38",
+            "Batch1-C39",
+            "Batch1-C44",
+            "Batch1-C45"
+          ]
+        },
+        {
+          "train_ids": [
+            "Batch1-C03",
+            "Batch1-C04",
+            "Batch1-C08",
+            "Batch1-C09",
+            "Batch1-C10",
+            "Batch1-C11",
+            "Batch1-C20",
+            "Batch1-C21",
+            "Batch1-C24",
+            "Batch1-C25",
+            "Batch1-C26",
+            "Batch1-C27",
+            "Batch1-C36",
+            "Batch1-C37",
+            "Batch1-C38",
+            "Batch1-C39",
+            "Batch1-C44",
+            "Batch1-C45"
+          ],
+          "validation_ids": [
+            "Batch1-C05",
+            "Batch1-C12",
+            "Batch1-C13",
+            "Batch1-C22",
+            "Batch1-C23",
+            "Batch1-C32",
+            "Batch1-C33",
+            "Batch1-C40",
+            "Batch1-C41"
+          ]
+        },
+        {
+          "train_ids": [
+            "Batch1-C03",
+            "Batch1-C04",
+            "Batch1-C05",
+            "Batch1-C10",
+            "Batch1-C11",
+            "Batch1-C12",
+            "Batch1-C13",
+            "Batch1-C22",
+            "Batch1-C23",
+            "Batch1-C26",
+            "Batch1-C27",
+            "Batch1-C32",
+            "Batch1-C33",
+            "Batch1-C38",
+            "Batch1-C39",
+            "Batch1-C40",
+            "Batch1-C41",
+            "Batch1-C44",
+            "Batch1-C45"
+          ],
+          "validation_ids": [
+            "Batch1-C08",
+            "Batch1-C09",
+            "Batch1-C20",
+            "Batch1-C21",
+            "Batch1-C24",
+            "Batch1-C25",
+            "Batch1-C36",
+            "Batch1-C37"
+          ]
+        }
+      ]
+    },
+    {
+      "fold": 3,
+      "train_ids": [
+        "Batch1-C03",
+        "Batch1-C04",
+        "Batch1-C06",
+        "Batch1-C07",
+        "Batch1-C08",
+        "Batch1-C09",
+        "Batch1-C12",
+        "Batch1-C13",
+        "Batch1-C16",
+        "Batch1-C17",
+        "Batch1-C20",
+        "Batch1-C21",
+        "Batch1-C22",
+        "Batch1-C23",
+        "Batch1-C26",
+        "Batch1-C27",
+        "Batch1-C30",
+        "Batch1-C31",
+        "Batch1-C32",
+        "Batch1-C33",
+        "Batch1-C36",
+        "Batch1-C37",
+        "Batch1-C38",
+        "Batch1-C39",
+        "Batch1-C42",
+        "Batch1-C43",
+        "Batch1-C44",
+        "Batch1-C45"
+      ],
+      "validation_ids": [
+        "Batch1-C05",
+        "Batch1-C10",
+        "Batch1-C11",
+        "Batch1-C24",
+        "Batch1-C25",
+        "Batch1-C40",
+        "Batch1-C41"
+      ],
+      "train_policies": [
+        "4.8C(80%)-4.8C",
+        "4C(80%)-4C",
+        "5.4C(40%)-3.6C",
+        "5.4C(50%)-3.6C",
+        "5.4C(60%)-3.6C",
+        "5.4C(80%)-5.4C",
+        "6C(30%)-3.6C",
+        "6C(40%)-3.6C",
+        "6C(50%)-3.6C",
+        "6C(60%)-3C",
+        "7C(40%)-3.6C",
+        "7C(40%)-3C",
+        "8C(25%)-3.6C",
+        "8C(35%)-3.6C"
+      ],
+      "validation_policies": [
+        "4.4C(80%)-4.4C",
+        "5.4C(50%)-3C",
+        "6C(40%)-3C",
+        "8C(15%)-3.6C"
+      ],
+      "inner_folds": [
+        {
+          "train_ids": [
+            "Batch1-C06",
+            "Batch1-C07",
+            "Batch1-C08",
+            "Batch1-C09",
+            "Batch1-C12",
+            "Batch1-C13",
+            "Batch1-C20",
+            "Batch1-C21",
+            "Batch1-C22",
+            "Batch1-C23",
+            "Batch1-C30",
+            "Batch1-C31",
+            "Batch1-C32",
+            "Batch1-C33",
+            "Batch1-C36",
+            "Batch1-C37",
+            "Batch1-C42",
+            "Batch1-C43"
+          ],
+          "validation_ids": [
+            "Batch1-C03",
+            "Batch1-C04",
+            "Batch1-C16",
+            "Batch1-C17",
+            "Batch1-C26",
+            "Batch1-C27",
+            "Batch1-C38",
+            "Batch1-C39",
+            "Batch1-C44",
+            "Batch1-C45"
+          ]
+        },
+        {
+          "train_ids": [
+            "Batch1-C03",
+            "Batch1-C04",
+            "Batch1-C08",
+            "Batch1-C09",
+            "Batch1-C16",
+            "Batch1-C17",
+            "Batch1-C20",
+            "Batch1-C21",
+            "Batch1-C26",
+            "Batch1-C27",
+            "Batch1-C30",
+            "Batch1-C31",
+            "Batch1-C36",
+            "Batch1-C37",
+            "Batch1-C38",
+            "Batch1-C39",
+            "Batch1-C44",
+            "Batch1-C45"
+          ],
+          "validation_ids": [
+            "Batch1-C06",
+            "Batch1-C07",
+            "Batch1-C12",
+            "Batch1-C13",
+            "Batch1-C22",
+            "Batch1-C23",
+            "Batch1-C32",
+            "Batch1-C33",
+            "Batch1-C42",
+            "Batch1-C43"
+          ]
+        },
+        {
+          "train_ids": [
+            "Batch1-C03",
+            "Batch1-C04",
+            "Batch1-C06",
+            "Batch1-C07",
+            "Batch1-C12",
+            "Batch1-C13",
+            "Batch1-C16",
+            "Batch1-C17",
+            "Batch1-C22",
+            "Batch1-C23",
+            "Batch1-C26",
+            "Batch1-C27",
+            "Batch1-C32",
+            "Batch1-C33",
+            "Batch1-C38",
+            "Batch1-C39",
+            "Batch1-C42",
+            "Batch1-C43",
+            "Batch1-C44",
+            "Batch1-C45"
+          ],
+          "validation_ids": [
+            "Batch1-C08",
+            "Batch1-C09",
+            "Batch1-C20",
+            "Batch1-C21",
+            "Batch1-C30",
+            "Batch1-C31",
+            "Batch1-C36",
+            "Batch1-C37"
+          ]
+        }
+      ]
+    },
+    {
+      "fold": 4,
+      "train_ids": [
+        "Batch1-C03",
+        "Batch1-C04",
+        "Batch1-C05",
+        "Batch1-C06",
+        "Batch1-C07",
+        "Batch1-C08",
+        "Batch1-C09",
+        "Batch1-C10",
+        "Batch1-C11",
+        "Batch1-C16",
+        "Batch1-C17",
+        "Batch1-C20",
+        "Batch1-C21",
+        "Batch1-C22",
+        "Batch1-C23",
+        "Batch1-C24",
+        "Batch1-C25",
+        "Batch1-C30",
+        "Batch1-C31",
+        "Batch1-C32",
+        "Batch1-C33",
+        "Batch1-C38",
+        "Batch1-C39",
+        "Batch1-C40",
+        "Batch1-C41",
+        "Batch1-C42",
+        "Batch1-C43",
+        "Batch1-C44",
+        "Batch1-C45"
+      ],
+      "validation_ids": [
+        "Batch1-C12",
+        "Batch1-C13",
+        "Batch1-C26",
+        "Batch1-C27",
+        "Batch1-C36",
+        "Batch1-C37"
+      ],
+      "train_policies": [
+        "4.4C(80%)-4.4C",
+        "4.8C(80%)-4.8C",
+        "4C(80%)-4C",
+        "5.4C(40%)-3.6C",
+        "5.4C(50%)-3C",
+        "5.4C(60%)-3.6C",
+        "5.4C(80%)-5.4C",
+        "6C(30%)-3.6C",
+        "6C(40%)-3C",
+        "6C(50%)-3.6C",
+        "6C(60%)-3C",
+        "7C(40%)-3.6C",
+        "8C(15%)-3.6C",
+        "8C(25%)-3.6C",
+        "8C(35%)-3.6C"
+      ],
+      "validation_policies": [
+        "5.4C(50%)-3.6C",
+        "6C(40%)-3.6C",
+        "7C(40%)-3C"
+      ],
+      "inner_folds": [
+        {
+          "train_ids": [
+            "Batch1-C05",
+            "Batch1-C06",
+            "Batch1-C07",
+            "Batch1-C08",
+            "Batch1-C09",
+            "Batch1-C10",
+            "Batch1-C11",
+            "Batch1-C20",
+            "Batch1-C21",
+            "Batch1-C22",
+            "Batch1-C23",
+            "Batch1-C30",
+            "Batch1-C31",
+            "Batch1-C32",
+            "Batch1-C33",
+            "Batch1-C40",
+            "Batch1-C41",
+            "Batch1-C42",
+            "Batch1-C43"
+          ],
+          "validation_ids": [
+            "Batch1-C03",
+            "Batch1-C04",
+            "Batch1-C16",
+            "Batch1-C17",
+            "Batch1-C24",
+            "Batch1-C25",
+            "Batch1-C38",
+            "Batch1-C39",
+            "Batch1-C44",
+            "Batch1-C45"
+          ]
+        },
+        {
+          "train_ids": [
+            "Batch1-C03",
+            "Batch1-C04",
+            "Batch1-C05",
+            "Batch1-C08",
+            "Batch1-C09",
+            "Batch1-C16",
+            "Batch1-C17",
+            "Batch1-C20",
+            "Batch1-C21",
+            "Batch1-C24",
+            "Batch1-C25",
+            "Batch1-C30",
+            "Batch1-C31",
+            "Batch1-C38",
+            "Batch1-C39",
+            "Batch1-C40",
+            "Batch1-C41",
+            "Batch1-C44",
+            "Batch1-C45"
+          ],
+          "validation_ids": [
+            "Batch1-C06",
+            "Batch1-C07",
+            "Batch1-C10",
+            "Batch1-C11",
+            "Batch1-C22",
+            "Batch1-C23",
+            "Batch1-C32",
+            "Batch1-C33",
+            "Batch1-C42",
+            "Batch1-C43"
+          ]
+        },
+        {
+          "train_ids": [
+            "Batch1-C03",
+            "Batch1-C04",
+            "Batch1-C06",
+            "Batch1-C07",
+            "Batch1-C10",
+            "Batch1-C11",
+            "Batch1-C16",
+            "Batch1-C17",
+            "Batch1-C22",
+            "Batch1-C23",
+            "Batch1-C24",
+            "Batch1-C25",
+            "Batch1-C32",
+            "Batch1-C33",
+            "Batch1-C38",
+            "Batch1-C39",
+            "Batch1-C42",
+            "Batch1-C43",
+            "Batch1-C44",
+            "Batch1-C45"
+          ],
+          "validation_ids": [
+            "Batch1-C05",
+            "Batch1-C08",
+            "Batch1-C09",
+            "Batch1-C20",
+            "Batch1-C21",
+            "Batch1-C30",
+            "Batch1-C31",
+            "Batch1-C40",
+            "Batch1-C41"
+          ]
+        }
+      ]
+    },
+    {
+      "fold": 5,
+      "train_ids": [
+        "Batch1-C03",
+        "Batch1-C04",
+        "Batch1-C05",
+        "Batch1-C06",
+        "Batch1-C07",
+        "Batch1-C10",
+        "Batch1-C11",
+        "Batch1-C12",
+        "Batch1-C13",
+        "Batch1-C16",
+        "Batch1-C17",
+        "Batch1-C20",
+        "Batch1-C21",
+        "Batch1-C24",
+        "Batch1-C25",
+        "Batch1-C26",
+        "Batch1-C27",
+        "Batch1-C30",
+        "Batch1-C31",
+        "Batch1-C32",
+        "Batch1-C33",
+        "Batch1-C36",
+        "Batch1-C37",
+        "Batch1-C40",
+        "Batch1-C41",
+        "Batch1-C42",
+        "Batch1-C43",
+        "Batch1-C44",
+        "Batch1-C45"
+      ],
+      "validation_ids": [
+        "Batch1-C08",
+        "Batch1-C09",
+        "Batch1-C22",
+        "Batch1-C23",
+        "Batch1-C38",
+        "Batch1-C39"
+      ],
+      "train_policies": [
+        "4.4C(80%)-4.4C",
+        "4.8C(80%)-4.8C",
+        "4C(80%)-4C",
+        "5.4C(50%)-3.6C",
+        "5.4C(50%)-3C",
+        "5.4C(60%)-3.6C",
+        "5.4C(80%)-5.4C",
+        "6C(40%)-3.6C",
+        "6C(40%)-3C",
+        "6C(50%)-3.6C",
+        "6C(60%)-3C",
+        "7C(40%)-3C",
+        "8C(15%)-3.6C",
+        "8C(25%)-3.6C",
+        "8C(35%)-3.6C"
+      ],
+      "validation_policies": [
+        "5.4C(40%)-3.6C",
+        "6C(30%)-3.6C",
+        "7C(40%)-3.6C"
+      ],
+      "inner_folds": [
+        {
+          "train_ids": [
+            "Batch1-C05",
+            "Batch1-C06",
+            "Batch1-C07",
+            "Batch1-C10",
+            "Batch1-C11",
+            "Batch1-C12",
+            "Batch1-C13",
+            "Batch1-C20",
+            "Batch1-C21",
+            "Batch1-C26",
+            "Batch1-C27",
+            "Batch1-C30",
+            "Batch1-C31",
+            "Batch1-C32",
+            "Batch1-C33",
+            "Batch1-C40",
+            "Batch1-C41",
+            "Batch1-C42",
+            "Batch1-C43"
+          ],
+          "validation_ids": [
+            "Batch1-C03",
+            "Batch1-C04",
+            "Batch1-C16",
+            "Batch1-C17",
+            "Batch1-C24",
+            "Batch1-C25",
+            "Batch1-C36",
+            "Batch1-C37",
+            "Batch1-C44",
+            "Batch1-C45"
+          ]
+        },
+        {
+          "train_ids": [
+            "Batch1-C03",
+            "Batch1-C04",
+            "Batch1-C05",
+            "Batch1-C12",
+            "Batch1-C13",
+            "Batch1-C16",
+            "Batch1-C17",
+            "Batch1-C20",
+            "Batch1-C21",
+            "Batch1-C24",
+            "Batch1-C25",
+            "Batch1-C30",
+            "Batch1-C31",
+            "Batch1-C36",
+            "Batch1-C37",
+            "Batch1-C40",
+            "Batch1-C41",
+            "Batch1-C44",
+            "Batch1-C45"
+          ],
+          "validation_ids": [
+            "Batch1-C06",
+            "Batch1-C07",
+            "Batch1-C10",
+            "Batch1-C11",
+            "Batch1-C26",
+            "Batch1-C27",
+            "Batch1-C32",
+            "Batch1-C33",
+            "Batch1-C42",
+            "Batch1-C43"
+          ]
+        },
+        {
+          "train_ids": [
+            "Batch1-C03",
+            "Batch1-C04",
+            "Batch1-C06",
+            "Batch1-C07",
+            "Batch1-C10",
+            "Batch1-C11",
+            "Batch1-C16",
+            "Batch1-C17",
+            "Batch1-C24",
+            "Batch1-C25",
+            "Batch1-C26",
+            "Batch1-C27",
+            "Batch1-C32",
+            "Batch1-C33",
+            "Batch1-C36",
+            "Batch1-C37",
+            "Batch1-C42",
+            "Batch1-C43",
+            "Batch1-C44",
+            "Batch1-C45"
+          ],
+          "validation_ids": [
+            "Batch1-C05",
+            "Batch1-C12",
+            "Batch1-C13",
+            "Batch1-C20",
+            "Batch1-C21",
+            "Batch1-C30",
+            "Batch1-C31",
+            "Batch1-C40",
+            "Batch1-C41"
+          ]
+        }
+      ]
+    }
+  ]
+}
